@@ -1,11 +1,11 @@
 {
-    "name": "top-browser",
+    "name": "always-top-browser",
     "version": "1.0.0",
     "description": "A minimal Electron internet browser application that always stays on top of your screen",
     "main": "main.js",
     "scripts": {
         "start": "electron .",
-        "build": "rm -rf Top-Browser-darwin-x64 && electron-packager . Top-Browser && cp browser.icns Top-Browser-darwin-x64/Top-Browser.app/Contents/Resources/electron.icns && asar pack Top-Browser-darwin-x64/Top-Browser.app/Contents/Resources/app Top-Browser-darwin-x64/Top-Browser.app/Contents/Resources/app.asar && rm -rf Top-Browser-darwin-x64/Top-Browser.app/Contents/Resources/app"
+        "build": "rm -rf Always-Top-Browser-darwin-x64 && electron-packager . Always-Top-Browser && cp browser.icns Always-Top-Browser-darwin-x64/Always-Top-Browser.app/Contents/Resources/electron.icns && asar pack Always-Top-Browser-darwin-x64/Always-Top-Browser.app/Contents/Resources/app Always-Top-Browser-darwin-x64/Always-Top-Browser.app/Contents/Resources/app.asar && rm -rf Always-Top-Browser-darwin-x64/Always-Top-Browser.app/Contents/Resources/app"
     },
     "repository": "https://bitbucket.org/speedydemon/electron_top_browser/",
     "keywords": [
