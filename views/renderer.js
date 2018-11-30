@@ -47,12 +47,26 @@ onload = () => {
 		app.url = event.url;
 		app.go();
 	});
-
+	webview.addEventListener('dom-ready', function (event) {
+		webview.insertCSS(`
+		html,body{ 
+			overflow: hidden !important; 
+		}
+		html:hover,body:hover{ 
+			overflow: visible !important; 
+		}
+		`
+		
+		)
+	});
 	webview.addEventListener('did-navigate', function (event) {
 		app.url = event.url;
 		app.canGoBack = webview.canGoBack();
 		app.canGoForward = webview.canGoForward();
 	});
+	webview.clearHistory();
+
+
 }
 
 function httpChecker(uri) {

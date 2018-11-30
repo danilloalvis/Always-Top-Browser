@@ -24,6 +24,7 @@ function createWindow() {
 		mainWindow.show();
 	});
 	mainWindow.on('closed', function () {
+		mainWindow.webContents.session.clearCache(function () {});
 		mainWindow = null;
 	});
 
