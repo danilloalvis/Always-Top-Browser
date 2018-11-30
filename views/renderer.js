@@ -1,7 +1,10 @@
 window.$ = window.jQuery = require('jquery');
 const { ipcRenderer } = require('electron');
 var uriHome = "https://www.google.com/";
-var gTLD = ['.aero', '.asia', '.arpa', '.nato', '.biz', '.cat', '.com', '.coop', '.edu', '.gov', '.gal', '.info', '.init', '.int', '.jobs', '.mil', '.mobi', '.museum', '.name', '.net', '.org', '.pro', '.tel', '.travel', '.xxxx', '.example', '.invalid', '.localhost', '.test', '.bitnet', '.csnet', '.local', '.root', '.uucp', '.onion', '.exit']
+
+const {
+	_app,
+} = require('electron');
 const {
 	remote
 } = require('electron');
@@ -47,24 +50,38 @@ onload = () => {
 		app.url = event.url;
 		app.go();
 	});
+
 	webview.addEventListener('dom-ready', function (event) {
 		webview.insertCSS(`
-		html,body{ 
-			overflow: hidden !important; 
-		}
-		html:hover,body:hover{ 
-			overflow: visible !important; 
-		}
-		`
-		
-		)
+				html,body{ 
+					overflow: hidden !important; 
+					overflow-x: hidden !important; 
+					overflow-y: hidden !important; 
+				}`)
+
+		window.$("html").mouseover(function () {
+			webview.insertCSS(`
+				html,body{ 
+					overflow: visible !important; 
+				}`)
+		});
+
+		window.$("html").mouseleave(function () {
+			webview.insertCSS(`
+				html,body{ 
+					overflow: hidden !important; 
+					overflow-x: hidden !important; 
+					overflow-y: hidden !important; 
+				}`)
+		});
+
+		webview.clearHistory();
 	});
 	webview.addEventListener('did-navigate', function (event) {
 		app.url = event.url;
 		app.canGoBack = webview.canGoBack();
 		app.canGoForward = webview.canGoForward();
 	});
-	webview.clearHistory();
 
 
 }
@@ -80,7 +97,12 @@ function httpChecker(uri) {
 			return `http://${uri}`
 		}
 	} else {
-		let search = encodeURI(uri);
-		return `https://www.google.com.br/search?q=${search}`
+		if (uri.includes(`http://`) || uri.includes(`https://`)) {
+			return uri;
+		} else {
+			let search = encodeURI(uri);
+			return `https://www.google.com.br/search?q=${search}`
+		}
+
 	}
 }
